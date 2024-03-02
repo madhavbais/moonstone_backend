@@ -53,6 +53,9 @@ const eventsSchema = new mongoose.Schema(
             type:Number,
             default:0,
             min:0
+        },
+        event_qr_link:{
+            type:String
         }
     }
 )
