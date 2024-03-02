@@ -1,5 +1,4 @@
-const { addAdmin } = require('../controller/adminController');
-const { deleteAdmin } = require('../controller/adminController');
+const { addAdmin, deleteAdmin } = require('../controller/adminController');
 
 const Router = require('express').Router();
 

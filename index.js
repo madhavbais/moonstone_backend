@@ -18,6 +18,7 @@ app.use(bodyparser.urlencoded({extended:false}))
 app.use('/events',eventRoute);
 app.use('/count',CountsRoute)
 app.use('/admin', adminRoute)
+app.use('/registration', registrationRoute)
 app.use(errorhandler)
 app.listen(PORT,()=>{
     console.log(`server is starting !! at ${PORT}`);
