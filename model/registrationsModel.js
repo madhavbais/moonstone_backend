@@ -1,6 +1,6 @@
 const { date } = require('joi');
 const mongoose = require('mongoose')
-const { Schema } = mongoose.Schema;
+const Schema  = mongoose.Schema;
 
 const registrationSchema = new Schema({
     
@@ -9,7 +9,7 @@ const registrationSchema = new Schema({
         required: true
     },
     phone_no: {
-        type: String,
+        type: Number,
         required: true
     },
     aadhar_no: {
@@ -42,6 +42,7 @@ const registrationSchema = new Schema({
     },
     status: {
         type: String,
+        default: "not registered",
         required: true
     },
     date_of_registration: {
@@ -49,8 +50,9 @@ const registrationSchema = new Schema({
         required: true
     },
     accept: {
-        type: String,
-        required: true
+        type: Boolean,
+        default: false,
+        
     },
     reg_id: {
         type: String,

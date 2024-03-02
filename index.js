@@ -7,6 +7,7 @@ const cors = require('cors')
 const PORT = process.env.PORT||8000;
 const eventRoute = require('./routes/eventRoute');
 const CountsRoute =require('./routes/CountsRoutes');
+const registrationRoute = require('./routes/registrationRoute')
 const { errorhandler } = require('./middleware/errorhandler');
 //database connectivity
 dbConnect();

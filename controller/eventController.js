@@ -32,6 +32,7 @@ const addEvent = asynchandler(async (req, res) => {
         end_registration_date: end_registration_date,
         fees:fees,
         event_qr_link:event_qr_link,
+  
       });
       res.json({
         msg: "Event added successfully",
