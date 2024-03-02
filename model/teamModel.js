@@ -6,20 +6,9 @@ const teamSchema = new Schema(
         name: {
             type: String
         },
-        enrollment_no: {
-            type: String
-        },
-        gender: {
-            type: String
-        },
-        phone_no: {
-            type: Number
-        },
-        email: {
+        aadhar_no: {
             type: String
         }
-
-    }
-)
+    })
 
 module.exports = mongoose.model('Team', teamSchema)

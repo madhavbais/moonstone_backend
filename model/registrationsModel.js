@@ -3,30 +3,58 @@ const mongoose = require('mongoose')
 const { Schema } = mongoose.Schema;
 
 const registrationSchema = new Schema({
-    reg_id:{
-        type: Number
-    },
-    receipt_id: {
-        type: Number
-    },
+    
     name: {
-        type: String
+        type: String,
+        required: true
     },
     phone_no: {
-        type: Number
+        type: String,
+        required: true
     },
-
     aadhar_no: {
-        type: String
+        type: String,
+        required: true
     },
-    email: {
-        type: String
+    utr: {
+        type: String,
+        required: true
     },
     gender: {
-        type: String
+        type: String,
+        required: true
     },
-    event_category: {
-        type: String
+    eventName: {
+        type: String,
+        required: true
+    },
+    eventID: {
+        type: String,
+        required: true
+    },
+    college: {
+        type: String,
+        required: true
+    },
+    category: {
+        type: String,
+        required: true
+    },
+    status: {
+        type: String,
+        required: true
+    },
+    date_of_registration: {
+        type: Date,
+        required: true
+    },
+    accept: {
+        type: String,
+        required: true
+    },
+    reg_id: {
+        type: String,
+        required: true
     },
     team: [
         {
@@ -34,30 +62,7 @@ const registrationSchema = new Schema({
             ref: 'Team'
         }
     ],
-    team_name: {
-        type: String
-    },
-    enrollment_no: {
-        type: String
-    },
-    college: {
-        type: String
-    },
-    fees: {
-        type: Number
-    },
-    participant_status: {
-        type: String
-    },
-    payment_status: {
-        type: String
-    },
-    utr: {
-        type:String
-    },
-    date_of_registration: {
-        type: date
-    }
+    
 })
 
 module.exports = mongoose.model('Registration', registrationSchema)
