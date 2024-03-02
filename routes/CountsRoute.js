@@ -1,5 +1,5 @@
-const Router =require('express').Router;
+// const Router =require('express').Router;
 
-Router.get('/getcounts')
+// Router.get('/getcounts')
 
-module.exports = Router;
+// module.exports = Router;

@@ -6,7 +6,8 @@ const dbConnect = require('./config/dbconnect');
 const cors = require('cors')
 const PORT = process.env.PORT||8000;
 const eventRoute = require('./routes/eventRoute');
-const CountsRoute =require('./routes/CountsRoutes');
+const adminRoute=require('./routes/adminRoute');
+// const CountsRoute =require('./routes/CountsRoutes');
 const registrationRoute = require('./routes/registrationRoute')
 const { errorhandler } = require('./middleware/errorhandler');
 //database connectivity
@@ -17,7 +18,7 @@ app.use(bodyparser.urlencoded({extended:false}))
 
 //routing
 app.use('/events',eventRoute);
-app.use('/count',CountsRoute)
+// app.use('/count',CountsRoute)
 app.use('/admin', adminRoute)
 app.use('/registration', registrationRoute)
 app.use(errorhandler)

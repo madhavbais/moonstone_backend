@@ -1,4 +1,3 @@
-const { date } = require('joi');
 const mongoose = require('mongoose')
 const Schema  = mongoose.Schema;
 
@@ -43,11 +42,11 @@ const registrationSchema = new Schema({
     status: {
         type: String,
         default: "not registered",
-        required: true
     },
     date_of_registration: {
         type: Date,
-        required: true
+        required:true,
+        min:Date.now()
     },
     accept: {
         type: Boolean,
