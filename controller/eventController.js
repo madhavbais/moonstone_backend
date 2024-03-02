@@ -14,6 +14,7 @@ const addEvent = asynchandler(async (req, res) => {
   const start_registraion_date = req.body.start_registraion_date;
   const end_registration_date = req.body.end_registration_date;
   const fees=req.body.fees;
+  const event_qr_link= req.body.eventqr;
   const findevent = await events.findOne({ eventName: eventName });
   if (!findevent) {
     try {
@@ -30,6 +31,7 @@ const addEvent = asynchandler(async (req, res) => {
         start_registration_date: start_registraion_date,
         end_registration_date: end_registration_date,
         fees:fees,
+        event_qr_link:event_qr_link,
       });
       res.json({
         msg: "Event added successfully",
@@ -88,6 +90,7 @@ const updateEvent = asynchandler(async (req, res) => {
   const start_registraion_date = req.body.start_registraion_date;
   const end_registration_date = req.body.end_registration_date;
   const fees=req.body.fees;
+  const event_qr_link= req.body.eventqr;
   if (allevent) {
     try {
       let updatedata = await events.updateOne(
@@ -105,6 +108,7 @@ const updateEvent = asynchandler(async (req, res) => {
           start_registration_date: start_registraion_date,
           end_registration_date: end_registration_date,
           fees:fees,
+          event_qr_link:event_qr_link,
         }
       );
       res.json({
