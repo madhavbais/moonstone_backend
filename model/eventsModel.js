@@ -1,8 +1,16 @@
 const mongoose = require('mongoose')
 const eventsSchema = new mongoose.Schema(
     {
+        event_image_link:{
+            type:String,
+            default:"hello"
+        },
         eventName: {
             type: String,
+            required:true,
+        },
+        aboutEvent:{
+            type:String,
             required:true
         },
         instruction: {
