@@ -30,8 +30,30 @@ const eventsSchema = new mongoose.Schema(
             type: Number,
             min:1,
             required: true
+        },
+        start_registration_date:{
+            type:Date,
+            default: Date.now(),
+            min:Date.now(),
+        },
+        end_registration_date:{
+            type:Date,
+            min:Date.now(),
+            default:Date.now()
+        },
+        status:{
+            type:Boolean,
+            default:false
+        },
+        Eventdate:{
+            type:Date, 
+            default:Date.now()       
+        },
+        fees:{
+            type:Number,
+            default:0,
+            min:0
         }
-
     }
 )
 

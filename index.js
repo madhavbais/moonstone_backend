@@ -6,6 +6,7 @@ const dbConnect = require('./config/dbconnect');
 const cors = require('cors')
 const PORT = process.env.PORT||8000;
 const eventRoute = require('./routes/eventRoute');
+const CountsRoute =require('./routes/CountsRoutes');
 const { errorhandler } = require('./middleware/errorhandler');
 //database connectivity
 dbConnect();
@@ -15,6 +16,7 @@ app.use(bodyparser.urlencoded({extended:false}))
 
 //routing
 app.use('/events',eventRoute);
+app.use('/count',CountsRoute)
 app.use(errorhandler)
 app.listen(PORT,()=>{
     console.log(`server is starting !! at ${PORT}`);

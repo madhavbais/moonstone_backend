@@ -9,6 +9,11 @@ const addEvent = asynchandler(async (req, res) => {
   const max_team_size = req.body.max_team_size;
   const min_team_size = req.body.min_team_size;
   const event_image_link = req.body.image_link;
+  const status = req.body.status;
+  const Eventdate = req.body.Eventdate;
+  const start_registraion_date = req.body.start_registraion_date;
+  const end_registration_date = req.body.end_registration_date;
+  const fees=req.body.fees;
   const findevent = await events.findOne({ eventName: eventName });
   if (!findevent) {
     try {
@@ -20,6 +25,11 @@ const addEvent = asynchandler(async (req, res) => {
         min_team_size: min_team_size,
         aboutEvent: aboutEvent,
         event_image_link: event_image_link,
+        Eventdate: Eventdate,
+        status: status,
+        start_registration_date: start_registraion_date,
+        end_registration_date: end_registration_date,
+        fees:fees,
       });
       res.json({
         msg: "Event added successfully",
@@ -52,7 +62,7 @@ const GetEventDataByCategory = asynchandler(async (req, res) => {
     throw new Error("No Events Found in this Category!");
   }
 });
-const geteventById = asynchandler(async(req,res) => {
+const geteventById = asynchandler(async (req, res) => {
   const id = req.params.eventid;
   console.log(id);
   const result = await events.findById(id);
@@ -63,7 +73,7 @@ const geteventById = asynchandler(async(req,res) => {
     throw new Error("No Event Found with this ID");
   }
 });
-const updateEvent = asynchandler(async(req,res) =>{
+const updateEvent = asynchandler(async (req, res) => {
   const id = req.params.eventid;
   const allevent = await events.findById(id);
   const eventName = req.body.eventname;
@@ -73,6 +83,11 @@ const updateEvent = asynchandler(async(req,res) =>{
   const min_team_size = req.body.min_team_size;
   const aboutEvent = req.body.aboutEvent;
   const event_image_link = req.body.image_link;
+  const status = req.body.status;
+  const Eventdate = req.body.Eventdate;
+  const start_registraion_date = req.body.start_registraion_date;
+  const end_registration_date = req.body.end_registration_date;
+  const fees=req.body.fees;
   if (allevent) {
     try {
       let updatedata = await events.updateOne(
@@ -84,7 +99,12 @@ const updateEvent = asynchandler(async(req,res) =>{
           max_team_size: max_team_size,
           min_team_size: min_team_size,
           aboutEvent: aboutEvent,
-          event_image_link: event_image_link
+          event_image_link: event_image_link,
+          Eventdate: Eventdate,
+          status: status,
+          start_registration_date: start_registraion_date,
+          end_registration_date: end_registration_date,
+          fees:fees,
         }
       );
       res.json({
