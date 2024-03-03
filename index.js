@@ -8,6 +8,8 @@ const PORT = process.env.PORT||8000;
 const eventRoute = require('./routes/eventRoute');
 const adminRoute=require('./routes/adminRoute');
 // const CountsRoute =require('./routes/CountsRoutes');
+const countRoute = require('./routes/CountsRoute');
+const utrRoute =require('./routes/utrRoute');
 const registrationRoute = require('./routes/registrationRoute')
 const { errorhandler } = require('./middleware/errorhandler');
 //database connectivity
@@ -24,6 +26,8 @@ app.use(bodyparser.urlencoded({extended:false}))
 
 //routing
 app.use('/events',eventRoute);
+app.use('/utrs', utrRoute);
+app.use('/counts', countRoute);
 // app.use('/count',CountsRoute)
 app.use('/admin', adminRoute)
 app.use('/registration', registrationRoute)

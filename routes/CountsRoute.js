@@ -1,5 +1,9 @@
-// const Router =require('express').Router;
+const Router = require('express').Router;
+const { getCounts } = require("../controller/countController");
 
-// Router.get('/getcounts')
+const router = Router();
 
-// module.exports = Router;
+// Route for getting counts
+router.get('/', getCounts);
+
+module.exports = router;
