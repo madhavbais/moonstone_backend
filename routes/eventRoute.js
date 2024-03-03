@@ -1,11 +1,12 @@
 const { addEvent, GetAllevents, GetEventDataByCategory, updateEvent, geteventById, deleteEvent } = require('../controller/eventController');
-
+const { authMiddleware, isAdmin } = require('../middleware/authmiddleware');
 const Router = require('express').Router();
 
-Router.post('/addData',addEvent);
+
 Router.get('/alleventData',GetAllevents);
 Router.get('/geteventBycategory',GetEventDataByCategory);
 Router.get('/:eventid',geteventById)
-Router.put('/updateEvent/:eventid',updateEvent);
-Router.delete('/:eventid',deleteEvent)
+Router.post('/addData',authMiddleware,isAdmin,addEvent);
+Router.put('/updateEvent/:eventid',authMiddleware,isAdmin,updateEvent);
+Router.delete('/:eventid',authMiddleware,isAdmin,deleteEvent)
 module.exports = Router;

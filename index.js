@@ -13,6 +13,12 @@ const { errorhandler } = require('./middleware/errorhandler');
 //database connectivity
 dbConnect();
 //configurations
+app.use(cors({
+    methods:['GET','POST','PUT','DELETE'],
+    credentials:true,
+    allowedHeaders: ['-TypContente', 'Authorization']
+}));
+
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({extended:false}))
 
