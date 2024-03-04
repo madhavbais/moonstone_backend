@@ -9,7 +9,6 @@ const addEvent = asynchandler(async (req, res) => {
   const max_team_size = req.body.max_team_size;
   const min_team_size = req.body.min_team_size;
   const event_image_link = req.body.image_link;
-  const status = req.body.status;
   const Eventdate = req.body.Eventdate;
   const start_registraion_date = req.body.start_registraion_date;
   const end_registration_date = req.body.end_registration_date;
@@ -28,7 +27,6 @@ const addEvent = asynchandler(async (req, res) => {
         aboutEvent: aboutEvent,
         event_image_link: event_image_link,
         Eventdate: Eventdate,
-        status: status,
         start_registration_date: start_registraion_date,
         end_registration_date: end_registration_date,
         fees:fees,
@@ -70,7 +68,7 @@ const geteventById = asynchandler(async (req, res) => {
   const result = await events.findById(id);
   console.log(result);
   if (result) {
-    res.json({ eventdata: result, status: 200, success: true });
+    res.json(result);
   } else {
     throw new Error("No Event Found with this ID");
   }
@@ -85,7 +83,6 @@ const updateEvent = asynchandler(async (req, res) => {
   const min_team_size = req.body.min_team_size;
   const aboutEvent = req.body.aboutEvent;
   const event_image_link = req.body.image_link;
-  const status = req.body.status;
   const Eventdate = req.body.Eventdate;
   const start_registraion_date = req.body.start_registraion_date;
   const end_registration_date = req.body.end_registration_date;
@@ -105,7 +102,6 @@ const updateEvent = asynchandler(async (req, res) => {
           aboutEvent: aboutEvent,
           event_image_link: event_image_link,
           Eventdate: Eventdate,
-          status: status,
           start_registration_date: start_registraion_date,
           end_registration_date: end_registration_date,
           fees:fees,
