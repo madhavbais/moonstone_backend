@@ -15,6 +15,10 @@ const adminSchema = new Schema(
             type: Boolean,
             default: false
         },
+        subAdmin:{
+            type: Boolean,
+            default: false
+        },
         registrationDesk: {
             type: Boolean,
             default: false

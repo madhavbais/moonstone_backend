@@ -25,6 +25,17 @@ const authMiddleware = asynchandler( async(req,res,next)=>{
         throw new Error("no token attached with request");
     }
 })
+const isValid = asynchandler( async(req,res,next)=>{
+    console.log(req.user);
+    const{email}= req.user
+    const findadmin = await User.findOne({email:email})
+    if(!findadmin){
+        throw new Error("not a verified admin!!")
+    }
+    else{
+       next();
+    }
+})
 const isAdmin = asynchandler( async(req,res,next)=>{
     console.log(req.user);
     const{email}= req.user
@@ -36,4 +47,16 @@ const isAdmin = asynchandler( async(req,res,next)=>{
        next();
     }
 })
-module.exports=  {authMiddleware,isAdmin};
+const isValidForEventManipulation= 
+asynchandler( async(req,res,next)=>{
+    console.log(req.user);
+    const{email}= req.user
+    const findadmin = await User.findOne({email:email})
+    if(findadmin.superAdmin === true|| findadmin.subAdmin===true){
+        next();
+    }
+    else{
+        throw new Error("not a verified super admin!!")
+    }
+})
+module.exports=  {authMiddleware,isAdmin,isValid,isValidForEventManipulation};

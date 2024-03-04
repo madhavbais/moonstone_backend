@@ -15,6 +15,7 @@ const addEvent = asynchandler(async (req, res) => {
   const end_registration_date = req.body.end_registration_date;
   const fees=req.body.fees;
   const event_qr_link= req.body.eventqr;
+  const event_venue=req.body.venue;
   const findevent = await events.findOne({ eventName: eventName });
   if (!findevent) {
     try {
@@ -32,7 +33,7 @@ const addEvent = asynchandler(async (req, res) => {
         end_registration_date: end_registration_date,
         fees:fees,
         event_qr_link:event_qr_link,
-  
+        event_venue:event_venue
       });
       res.json({
         msg: "Event added successfully",
@@ -47,10 +48,8 @@ const addEvent = asynchandler(async (req, res) => {
   }
 });
 const GetAllevents = async (req, res) => {
-  const allevnts = await events.find();
-  res.json({
-    AllEventsData: allevnts,
-  });
+  const allevnts = await events.find({});
+  res.json(allevnts);
 };
 const GetEventDataByCategory = asynchandler(async (req, res) => {
   const category = req.body.categoryname;
@@ -92,6 +91,7 @@ const updateEvent = asynchandler(async (req, res) => {
   const end_registration_date = req.body.end_registration_date;
   const fees=req.body.fees;
   const event_qr_link= req.body.eventqr;
+  const event_venue= req.body.event_venue;
   if (allevent) {
     try {
       let updatedata = await events.updateOne(
@@ -110,6 +110,7 @@ const updateEvent = asynchandler(async (req, res) => {
           end_registration_date: end_registration_date,
           fees:fees,
           event_qr_link:event_qr_link,
+          event_venue:event_venue
         }
       );
       res.json({
@@ -132,7 +133,7 @@ const deleteEvent = asynchandler(async (req, res) => {
     const deletedata = await events.findByIdAndDelete(id);
     res.json(deletedata);
   } catch {
-    throw new Error("something went wrong");
+    throw new Error("something went wwrong");
   }
 });
 module.exports = {

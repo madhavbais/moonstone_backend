@@ -1,6 +1,7 @@
 const admin = require("../model/adminModel");
-const asynchandler = require('express-async-handler')
-const { refreshtoken } = require("../config/refreshtoken");
+const asynchandler = require("express-async-handler");
+const { refreshtoken} = require("../config/refreshtoken");
+const {generateToken} = require('../config/jwttoken')
 const jwt = require("jsonwebtoken");
 //singup
 const addAdmin = async (req, res) => {
@@ -10,16 +11,18 @@ const addAdmin = async (req, res) => {
   const registrationDesk = req.body.registrationDesk;
   const finance = req.body.finance;
   const eventDepartment = req.body.eventDepartment;
-  const findAdmin = await admin.findOne({ email:email });
+  const subAdmin = req.body.subAdmin;
+  const findAdmin = await admin.findOne({ email: email });
   if (!findAdmin) {
     try {
       const newAdmin = await admin.create({
         email: email,
         password: password,
         superAdmin: superAdmin,
+        subAdmin: subAdmin,
         registrationDesk: registrationDesk,
         finance: finance,
-        eventDepartment: eventDepartment
+        eventDepartment: eventDepartment,
       });
       res.json({
         msg: "Admin added successfully",
@@ -59,7 +62,15 @@ const loginUser = asynchandler(async (req, res) => {
       maxAge: 72 * 60 * 60 * 1000,
     });
     res.json({
-      userdata: finduser,
+      _id: finduser?._id,
+
+      email: finduser?.email,
+      password: finduser?.password,
+      superAdmin: finduser?.superAdmin,
+      finance: finduser?.finance,
+      registrationDesk: finduser?.registrationDesk,
+      eventDepartment: finduser?.eventDepartment,
+      token: generateToken(finduser?._id),
     });
   } else {
     throw new Error(" invalid user credentials");
@@ -102,4 +113,14 @@ const handleRefreshToken = asynchandler(async (req, res) => {
     res.json({ accessToken });
   });
 });
-module.exports = { addAdmin, deleteAdmin,loginUser,handleRefreshToken };
+
+const checkvalidity = asynchandler(async (req, res) => {
+  res.send("user is a varified admin ");
+});
+module.exports = {
+  addAdmin,
+  deleteAdmin,
+  loginUser,
+  handleRefreshToken,
+  checkvalidity,
+};

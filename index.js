@@ -10,16 +10,17 @@ const adminRoute=require('./routes/adminRoute');
 // const CountsRoute =require('./routes/CountsRoutes');
 const registrationRoute = require('./routes/registrationRoute')
 const { errorhandler } = require('./middleware/errorhandler');
+const cookieparser = require('cookie-parser');
 //database connectivity
 dbConnect();
 //configurations
+app.use(bodyparser.json());
 app.use(cors({
     methods:['GET','POST','PUT','DELETE'],
     credentials:true,
-    allowedHeaders: ['-TypContente', 'Authorization']
+    allowedHeaders: ['Content-Type', 'Authorization']
 }));
-
-app.use(bodyparser.json());
+app.use(cookieparser())
 app.use(bodyparser.urlencoded({extended:false}))
 
 //routing

@@ -41,9 +41,9 @@ const eventsSchema = new mongoose.Schema(
             min:Date.now(),
             default:Date.now()
         },
-        status:{
-            type:Boolean,
-            default:false
+        event_venue:{
+            type:String,
+            default:""
         },
         Eventdate:{
             type:Date, 
