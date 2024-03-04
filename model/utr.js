@@ -1,13 +1,15 @@
-const mongoose = require('mongoose')
-const { Schema } = mongoose.Schema;
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 const utrSchema = new Schema(
     {
         utr: {
-            type: String
+            type: String,
+            required: true
         },
         reg_id: {
-            type: Number
+            type: Number,
+            required: true
         }
     }
 )

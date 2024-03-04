@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
+const mongoURI = 'mongodb+srv://itish_jain:12345@cluster0.vxfie1s.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
 
 const dbConnect = async()=>{
-    const conn = await mongoose.connect(process.env.mongourl,{
+    const conn = await mongoose.connect(mongoURI,{
         dbName:"moonstone",
     })
     if(conn){
@@ -10,4 +11,4 @@ const dbConnect = async()=>{
     return console.log(err)
 }
 
-module.exports =dbConnect;
+module.exports = dbConnect;

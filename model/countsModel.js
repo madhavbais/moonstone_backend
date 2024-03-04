@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-const { Schema } = mongoose.Schema;
+const Schema = mongoose.Schema;
 
 const countsSchema = new Schema({
   visitor: {
@@ -31,4 +31,4 @@ const countsSchema = new Schema({
     default: 0,
   },
 });
-module.exports = mongoose.modal("Counts", countsSchema);
+module.exports = mongoose.model("Counts", countsSchema);
