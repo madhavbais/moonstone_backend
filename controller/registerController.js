@@ -1,6 +1,7 @@
 const registrations = require("../model/registrationsModel");
 const asynchandler = require('express-async-handler');
 const addNewRegister = asynchandler(async (req, res) => {
+    const email = req.body.email
     const name = req.body.name;
     const phone_no = req.body.phone_no;
     const aadhar_no = req.body.aadhar_no;
@@ -15,10 +16,11 @@ const addNewRegister = asynchandler(async (req, res) => {
     const reg_id= req.body.reg_id;
     const team = req.body.team;
 
-    const findRegistration = await registrations.findOne({ name : name });
+    const findRegistration = await registrations.findOne({ email:email });
     if(!findRegistration){
         try{
             const newRegistration = await registrations.create({
+              email:email,
                name: name,
                phone_no: phone_no,
                aadhar_no: aadhar_no,
@@ -32,7 +34,7 @@ const addNewRegister = asynchandler(async (req, res) => {
                date_of_registration: date_of_registration,
                accept: accept,
                reg_id: reg_id,
-               team: team
+               team:team
         });
         res.json({
             msg: "Registration Done",

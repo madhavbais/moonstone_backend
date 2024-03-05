@@ -7,6 +7,10 @@ const registrationSchema = new Schema({
         type: String,
         required: true
     },
+    email:{
+        type:String,
+        required:true
+    },
     phone_no: {
         type: Number,
         required: true
@@ -44,9 +48,7 @@ const registrationSchema = new Schema({
         default: "not registered",
     },
     date_of_registration: {
-        type: Date,
-        required:true,
-        min:Date.now()
+        type:String
     },
     accept: {
         type: Boolean,
@@ -59,8 +61,12 @@ const registrationSchema = new Schema({
     },
     team: [
         {
-            type: Schema.Types.ObjectId,
-            ref: 'Team'
+        name: {
+            type: String
+        },
+        aadhar_no: {
+            type: String
+        } 
         }
     ],
     
