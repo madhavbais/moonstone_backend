@@ -59,4 +59,14 @@ asynchandler( async(req,res,next)=>{
         throw new Error("not a verified super admin!!")
     }
 })
-module.exports=  {authMiddleware,isAdmin,isValid,isValidForEventManipulation};
+const isAuthenticatedforRegistrationDESkManipulations = asynchandler(async(req,res,next)=>{
+    const{email}=req.user
+    const findadmin = await User.findOne({email:email});
+    if(findadmin) {
+        next()
+    }
+    else{
+        throw new Error("you are not a authenticated person!");
+    }
+})
+module.exports=  {authMiddleware,isAdmin,isValid,isValidForEventManipulation,isAuthenticatedforRegistrationDESkManipulations};
