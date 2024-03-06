@@ -182,7 +182,7 @@ const deleteRegistration = async (req, res) => {
 
 const getAllRegistration = asynchandler(async (req, res) => {
   const email = req.body.email;
-  const findsuperadmin = await admin.find({ email: email });
+  const findsuperadmin = await admin.findOne({email:email });
   if (findsuperadmin.superAdmin === true) {
     const findalldata = await registrations.find();
     res.json(findalldata);
