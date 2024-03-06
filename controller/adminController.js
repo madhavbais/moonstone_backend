@@ -113,7 +113,10 @@ const handleRefreshToken = asynchandler(async (req, res) => {
     res.json({ accessToken });
   });
 });
-
+const getalladmindata=asynchandler(async(req,res)=>{
+  const getadmin = await admin.find()
+  res.json(getadmin)
+})
 const checkvalidity = asynchandler(async (req, res) => {
   res.send("user is a varified admin ");
 });
@@ -123,4 +126,5 @@ module.exports = {
   loginUser,
   handleRefreshToken,
   checkvalidity,
+  getalladmindata
 };

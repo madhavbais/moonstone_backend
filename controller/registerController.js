@@ -111,6 +111,11 @@ const addNewRegister = asynchandler(async (req, res) => {
                     });
     
         }
-    }     
-    module.exports = { addNewRegister, deleteRegistration, updateRegistration };
+    }   
+    
+    const getAllRegistration=asynchandler(async(req,res)=>{
+      const allregistrations = registrations.find()
+      res.json(allregistrations)
+    })
+    module.exports = { addNewRegister, deleteRegistration, updateRegistration ,getAllRegistration};
 
