@@ -189,7 +189,8 @@ const getAllRegistration = asynchandler(async (req, res) => {
   } else if (findsuperadmin.registrationDesk == true) {
     const findcategory = findsuperadmin.eventDepartment;
     const finddata = await registrations.find({ category: findcategory });
-    console.log(findcategory)
+    // console.log(findcategory)
+    // console.log(finddata);
     res.json(finddata);
   } else {
     throw new Error("you are not a admin");
