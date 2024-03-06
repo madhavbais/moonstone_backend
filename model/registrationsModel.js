@@ -56,7 +56,7 @@ const registrationSchema = new Schema({
         
     },
     reg_id: {
-        type: String,
+        type: Number,
         required: true
     },
     team: [

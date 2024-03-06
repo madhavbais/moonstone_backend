@@ -9,17 +9,9 @@ const checkduplicate = expressAsyncHandler(async (req, res) => {
   eventid:eventid});
   if (checkaadhar) {
     throw new Error("aadhar  already registerd for event!");
-  } else {
-    const newdata = await duplicateAadharModel.create({
-      eventid: eventid,
-    });
-    const updatedata = await duplicateAadharModel.findByIdAndUpdate(
-      newdata._id,
-      {
-        $push: { aadhar_list: { aadhar_no: aadhar_no } },
-      }
-    );
-    res.json(updatedata);
+  }
+  else{
+    res.json({msg:"no problem"});
   }
 });
 

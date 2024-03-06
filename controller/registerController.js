@@ -1,6 +1,37 @@
 const registrations = require("../model/registrationsModel");
+const nodemailer = require("nodemailer");
 const admin = require("../model/adminModel");
+const duplicateAadharModel = require("../model/duplicateAadharModel");
 const asynchandler = require("express-async-handler");
+const eventsModel = require("../model/eventsModel");
+
+
+const randomFixedInteger = (length)=> {
+  return Math.floor(Math.pow(10, length-1) + Math.random() * (Math.pow(10, length) - Math.pow(10, length-1) - 1));
+}
+
+// async function generateUniqueNumber() {
+//   const min = 100000; // Minimum 6-digit number
+//   const max = 999999; // Maximum 6-digit number
+//   let number;
+//   do {
+//       number = Math.floor(Math.random() * (max - min + 1)) + min;
+//   } while (!isUnique(number));
+//   const updateNumberlist = await  registrationnumbersModel.create({registerationnumber: number})
+//   return number;
+// }
+
+// const isUnique =asynchandler(async(number)=> {
+//   try {
+//       const result = await registrationnumbersModel.findOne({registerationnumber: number});
+//       return !result; // Return true if the number does not exist in the database
+//   } catch (error) {
+//       throw new Error("Error checking uniqueness:",error);
+//       return false;
+//     }
+// }
+// )
+
 const addNewRegister = asynchandler(async (req, res) => {
   const email = req.body.email;
   const name = req.body.name;
@@ -16,10 +47,16 @@ const addNewRegister = asynchandler(async (req, res) => {
   const accept = req.body.accept;
   const reg_id = req.body.reg_id;
   const team = req.body.team;
-
-  const findRegistration = await registrations.findOne({ email: email });
-  if (!findRegistration) {
+  const adhaarlist = req.body.aaharlist;
+  const findRegistration = await registrations.findOne({
+    email: email,
+    eventID: eventID,
+  });
+  const finddate = await events
+  const registrationNumber =randomFixedInteger(9);
+  if (!findRegistration&&registrationNumber) {
     try {
+      
       const newRegistration = await registrations.create({
         email: email,
         name: name,
@@ -34,16 +71,50 @@ const addNewRegister = asynchandler(async (req, res) => {
         status: "pending",
         date_of_registration: date_of_registration,
         accept: accept,
-        reg_id: reg_id,
+        reg_id: registrationNumber,
         team: team,
       });
+      console.log(adhaarlist);
+      const insertinaadharlist = await duplicateAadharModel.find({eventid:eventID});
+      if(insertinaadharlist){
+        const updatelist = await duplicateAadharModel.updateOne({eventid:eventID},{"$push":{"aadhar_list":adhaarlist}})
+      }
+      else{
+        const createlist = await duplicateAadharModel.create({
+          eventid:eventID,
+          aadhar_list:adhaarlist
+        })
+      }
+      const transporter = nodemailer.createTransport({
+        host: "smtp.gmail.com",
+        port: 587,
+        secure: false, // Use `true` for port 465, `false` for all other ports
+        auth: {
+          user: process.env.email,
+          pass: process.env.password,
+        },
+      });
+      const mailoptions = {
+        from: {
+          name: "Team Moonstone",
+          address: process.env.email,
+        },
+        to: email,
+        subject: "Thank You for Registering for the Moonstone Event",
+        html:`<p>Dear <b>${name}</b><br/><br/>Hope this email finds you in good spirits.Thank you for taking the time to register for the upcoming Moonstone event :- <b>${eventName}</b>.your registration id is <b>${registrationNumber}</b><br/>Your interest and participation are highly valued, and we are thrilled to have you join us.We wanted to confirm that we have successfully received your registration details.<br/> However, <b>please note that all registrations are currently undergoing a verification process </b>to ensure accuracy and legitimacy.Rest assured, your registration is in progress, and we will keep you updated on its status via email.<br/>Once again, thank you for your registration and your enthusiasm for the Moonstone event. We are excited to have you with us and look forward to sharing more details about the event in the near future.<br/>Warm regards<br/>Moonstone committee</p>`
+      };
+      try {
+        await transporter.sendMail(mailoptions);
+      } catch (err) {
+        throw new Error(" problem in sending mail");
+      }
       res.json({
         msg: "Registration Done",
         status: 200,
         sucess: true,
       });
     } catch (error) {
-      throw new Error("Unable to register");
+      throw new Error(`Unable to register ${error}`);
     }
   } else {
     throw new Error("This registration has been done already.");
@@ -110,7 +181,7 @@ const deleteRegistration = async (req, res) => {
 };
 
 const getAllRegistration = asynchandler(async (req, res) => {
-  const email = res.body.email;
+  const email = req.body.email;
   const findsuperadmin = await admin.find({ email: email });
   if (findsuperadmin.superAdmin === true) {
     const findalldata = await registrations.find();
@@ -123,45 +194,46 @@ const getAllRegistration = asynchandler(async (req, res) => {
     throw new Error("you are not a admin");
   }
 });
-const aproveregistration = asynchandler(async(req,res)=>
-{
+const aproveregistration = asynchandler(async (req, res) => {
   const registrationid = req.params.id;
   const category = req.body.category;
-  const eventid= req.bosy.eventid;
+  const eventid = req.bosy.eventid;
   const amount = req.body.amount;
   const findRegistration = registrations.findById(registrationid);
-  if(findRegistration){
-    const updateRegistration = await registrations.updateOne({_id:registrationid},{
-      status:"approved"
-    })
+  if (findRegistration) {
+    const updateRegistration = await registrations.updateOne(
+      { _id: registrationid },
+      {
+        status: "approved",
+      }
+    );
     res.json({
-      msg:"request approved for registration"
-    })
-  }
-  else{
-    throw new Error("cant update data. registrations not found")
+      msg: "request approved for registration",
+    });
+  } else {
+    throw new Error("cant update data. registrations not found");
   }
 });
-const denyregistrations = asynchandler(async(req,res)=>{
+const denyregistrations = asynchandler(async (req, res) => {
   const registrationid = req.body.regid;
   const findRegistration = await registrations.findById(registrationid);
-  if(findRegistration){
-    const updatedata = await  registrations.updateOne({_id:id},{
-      status:"not approved"
-    })
-    res.json(
-      {msg:"registrations disapproved!!"}
-    )
-  }
-  else{
+  if (findRegistration) {
+    const updatedata = await registrations.updateOne(
+      { _id: id },
+      {
+        status: "not approved",
+      }
+    );
+    res.json({ msg: "registrations disapproved!!" });
+  } else {
     throw new Error("cant update registrations . registratios not found");
   }
-})
+});
 module.exports = {
   addNewRegister,
   deleteRegistration,
   updateRegistration,
   getAllRegistration,
   aproveregistration,
-  denyregistrations
+  denyregistrations,
 };
