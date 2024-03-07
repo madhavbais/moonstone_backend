@@ -10,5 +10,5 @@ Router.post("/checkaadhar",checkduplicate);
 Router.delete('/deleteRegistration',authMiddleware,isAdmin,deleteRegistration)
 Router.get('/allregistrations',authMiddleware,isAuthenticatedforRegistrationDESkManipulations,getAllRegistration);
 Router.post('/approveRegistration/:id',authMiddleware,isAuthenticatedforRegistrationDESkManipulations,aproveregistration);
-Router.post('/denyRegistrations',authMiddleware,isAuthenticatedforRegistrationDESkManipulations,denyregistrations);
+Router.post('/denyRegistrations/:id',authMiddleware,isAuthenticatedforRegistrationDESkManipulations,denyregistrations);
 module.exports = Router;

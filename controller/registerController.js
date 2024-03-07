@@ -205,6 +205,29 @@ const aproveregistration = asynchandler(async (req, res) => {
         status: "approved",
       }
     );
+    const transporter = nodemailer.createTransport({
+      host: "smtp.gmail.com",
+      port: 587,
+      secure: false, // Use `true` for port 465, `false` for all other ports
+      auth: {
+        user: process.env.email,
+        pass: process.env.password,
+      },
+    });
+    const mailoptions = {
+      from: {
+        name: "Team Moonstone",
+        address: process.env.email,
+      },
+      to: findRegistration.email,
+      subject: "Registeration Accepted for the Moonstone Event",
+      html:`<p>Dear <b>${findRegistration.name}</b><br/><br/>Hope this email finds you in good spirits.Your Registration is confirmed  for the upcoming Moonstone event :- <b>${findRegistration.eventName}</b>.your registration id is <b>${findRegistration.reg_id}</b><br/>Once again, thank you for your registration and your enthusiasm for the Moonstone event. We are excited to have you with us and look forward to see you in <b>Moonstone2k24</b><br/>Warm regards<br/>Moonstone committee</p>`
+    };
+    try {
+      transporter.sendMail(mailoptions);
+    } catch (err) {
+      throw new Error(" problem in sending mail");
+    }
     res.json({
       msg: "request approved for registration",
     });
@@ -213,7 +236,7 @@ const aproveregistration = asynchandler(async (req, res) => {
   }
 });
 const denyregistrations = asynchandler(async (req, res) => {
-  const registrationid = req.body.regid;
+  const registrationid = req.params.id;
   const findRegistration = await registrations.findById(registrationid);
   if (findRegistration) {
     const updatedata = await registrations.updateOne(
