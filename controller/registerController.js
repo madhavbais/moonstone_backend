@@ -44,15 +44,15 @@ const addNewRegister = asynchandler(async (req, res) => {
   const college = req.body.college;
   const category = req.body.category;
   const date_of_registration = req.body.date_of_registration;
-  const accept = req.body.accept;
-  const reg_id = req.body.reg_id;
   const team = req.body.team;
   const adhaarlist = req.body.aaharlist;
+  console.log(team)
+  console.log(adhaarlist)
   const findRegistration = await registrations.findOne({
     email: email,
     eventID: eventID,
   });
-  const finddate = await events
+  // console.log(team);
   const registrationNumber =randomFixedInteger(9);
   if (!findRegistration&&registrationNumber) {
     try {
@@ -70,12 +70,10 @@ const addNewRegister = asynchandler(async (req, res) => {
         category: category,
         status: "pending",
         date_of_registration: date_of_registration,
-        accept: accept,
         reg_id: registrationNumber,
         team: team,
       });
-      console.log(adhaarlist);
-      const insertinaadharlist = await duplicateAadharModel.find({eventid:eventID});
+      const insertinaadharlist = await duplicateAadharModel.findOne({eventid:eventID});
       if(insertinaadharlist){
         const updatelist = await duplicateAadharModel.updateOne({eventid:eventID},{"$push":{"aadhar_list":adhaarlist}})
       }
@@ -104,7 +102,7 @@ const addNewRegister = asynchandler(async (req, res) => {
         html:`<p>Dear <b>${name}</b><br/><br/>Hope this email finds you in good spirits.Thank you for taking the time to register for the upcoming Moonstone event :- <b>${eventName}</b>.your registration id is <b>${registrationNumber}</b><br/>Your interest and participation are highly valued, and we are thrilled to have you join us.We wanted to confirm that we have successfully received your registration details.<br/> However, <b>please note that all registrations are currently undergoing a verification process </b>to ensure accuracy and legitimacy.Rest assured, your registration is in progress, and we will keep you updated on its status via email.<br/>Once again, thank you for your registration and your enthusiasm for the Moonstone event. We are excited to have you with us and look forward to sharing more details about the event in the near future.<br/>Warm regards<br/>Moonstone committee</p>`
       };
       try {
-        await transporter.sendMail(mailoptions);
+        transporter.sendMail(mailoptions);
       } catch (err) {
         throw new Error(" problem in sending mail");
       }
@@ -116,7 +114,7 @@ const addNewRegister = asynchandler(async (req, res) => {
     } catch (error) {
       throw new Error(`Unable to register ${error}`);
     }
-  } else {
+  }else {
     throw new Error("This registration has been done already.");
   }
 });

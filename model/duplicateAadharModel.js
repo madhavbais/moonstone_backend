@@ -5,11 +5,14 @@ const duplicateAadharSchema = new mongoose.Schema(
             type:String,
             required:true
         },
-        aadhar_list:[{
+        aadhar_list:[
+            {
             aadhar_no:{
                 type:String,
+                required:true
             }
-        }]
+        }
+        ]
     }
 )
 
