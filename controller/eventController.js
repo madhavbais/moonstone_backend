@@ -14,7 +14,7 @@ const addEvent = asynchandler(async (req, res) => {
   const end_registration_date = req.body.end_registration_date;
   const fees=req.body.fees;
   const event_qr_link= req.body.eventqr;
-  const event_venue=req.body.venue;
+  const event_venue=req.body.Eventvenue;
   const findevent = await events.findOne({ eventName: eventName });
   if (!findevent) {
     try {

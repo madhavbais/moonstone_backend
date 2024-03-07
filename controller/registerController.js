@@ -197,9 +197,6 @@ const getAllRegistration = asynchandler(async (req, res) => {
 });
 const aproveregistration = asynchandler(async (req, res) => {
   const registrationid = req.params.id;
-  const category = req.body.category;
-  const eventid = req.bosy.eventid;
-  const amount = req.body.amount;
   const findRegistration = registrations.findById(registrationid);
   if (findRegistration) {
     const updateRegistration = await registrations.updateOne(
