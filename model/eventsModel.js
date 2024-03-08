@@ -40,7 +40,7 @@ const eventsSchema = new mongoose.Schema(
         },
         event_venue:{
             type:String,
-            default:""
+            default:"will be provided soon.."
         },
         Eventdate:{
             type:Date, 
