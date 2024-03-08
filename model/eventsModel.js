@@ -23,7 +23,6 @@ const eventsSchema = new mongoose.Schema(
         },
         max_team_size: {
             type: Number,
-            max:11,
             required:true,
         },
         min_team_size: {

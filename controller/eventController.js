@@ -16,6 +16,21 @@ const addEvent = asynchandler(async (req, res) => {
   const event_qr_link= req.body.eventqr;
   const event_venue=req.body.Eventvenue;
   const findevent = await events.findOne({ eventName: eventName });
+  console.log({
+    eventName: eventName,
+    instruction: instructions,
+    event_category: event_category,
+    max_team_size: max_team_size,
+    min_team_size: min_team_size,
+    aboutEvent: aboutEvent,
+    event_image_link: event_image_link,
+    Eventdate: Eventdate,
+    start_registration_date: start_registration_date,
+    end_registration_date: end_registration_date,
+    fees:fees,
+    event_qr_link:event_qr_link,
+    event_venue:event_venue
+  })
   if (!findevent) {
     try {
       const newevent = await events.create({
@@ -39,7 +54,7 @@ const addEvent = asynchandler(async (req, res) => {
         sucess: true,
       });
     } catch (error) {
-      throw new Error("unable to create new event",error);
+      throw new Error(error);
     }
   } else {
     throw new Error("This Event already exists.");
