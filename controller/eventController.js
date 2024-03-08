@@ -39,7 +39,7 @@ const addEvent = asynchandler(async (req, res) => {
         sucess: true,
       });
     } catch (error) {
-      throw new Error("unable to create new event");
+      throw new Error("unable to create new event",err);
     }
   } else {
     throw new Error("This Event already exists.");
