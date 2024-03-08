@@ -3,7 +3,7 @@ const eventsSchema = new mongoose.Schema(
     {
         event_image_link:{
             type:String,
-            default:"hello"
+            default:"no image for poster"
         },
         eventName: {
             type: String,
@@ -52,7 +52,8 @@ const eventsSchema = new mongoose.Schema(
             min:0
         },
         event_qr_link:{
-            type:String
+            type:String,
+            default:"no qrcode given"
         }
     }
 )
