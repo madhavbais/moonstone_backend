@@ -21,7 +21,7 @@ const registrationSchema = new Schema({
     },
     utr: {
         type: String,
-        required: true
+        default:"not required /not given"
     },
     gender: {
         type: String,
@@ -48,7 +48,8 @@ const registrationSchema = new Schema({
         default: "not registered",
     },
     date_of_registration: {
-        type:String
+        type:String,
+        default:"not given"
     },
     accept: {
         type: Boolean,
