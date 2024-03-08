@@ -1,8 +1,7 @@
 const mongoose = require('mongoose');
-const mongoURI = 'mongodb+srv://itish_jain:12345@cluster0.vxfie1s.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0';
 
 const dbConnect = async()=>{
-    const conn = await mongoose.connect(mongoURI,{
+    const conn = await mongoose.connect(process.env.mongourl,{
         dbName:"moonstone",
     })
     if(conn){
