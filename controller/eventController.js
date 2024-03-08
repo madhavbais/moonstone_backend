@@ -10,7 +10,7 @@ const addEvent = asynchandler(async (req, res) => {
   const min_team_size = req.body.min_team_size;
   const event_image_link = req.body.image_link;
   const Eventdate = req.body.Eventdate;
-  const start_registraion_date = req.body.start_registraion_date;
+  const start_registration_date = req.body.start_registration_date;
   const end_registration_date = req.body.end_registration_date;
   const fees=req.body.fees;
   const event_qr_link= req.body.eventqr;
@@ -27,7 +27,7 @@ const addEvent = asynchandler(async (req, res) => {
         aboutEvent: aboutEvent,
         event_image_link: event_image_link,
         Eventdate: Eventdate,
-        start_registration_date: start_registraion_date,
+        start_registration_date: start_registration_date,
         end_registration_date: end_registration_date,
         fees:fees,
         event_qr_link:event_qr_link,
