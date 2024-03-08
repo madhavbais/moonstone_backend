@@ -88,6 +88,20 @@ const geteventById = asynchandler(async (req, res) => {
     throw new Error("No Event Found with this ID");
   }
 });
+const checkevent = asynchandler(async(req,res)=>{
+  const eventname = req.body.eventname;
+  const findevent = await events.findOne({eventName:eventname});
+  if(findevent){
+    throw new Error("cant add event as event is already added!");
+  }
+  else{
+    res.json({
+      msg:"event added succesfully",
+      status:200,
+      success:true
+    })
+  }
+})
 const updateEvent = asynchandler(async (req, res) => {
   const id = req.params.eventid;
   const allevent = await events.findById(id);
@@ -154,4 +168,5 @@ module.exports = {
   updateEvent,
   geteventById,
   deleteEvent,
+  checkevent
 };
