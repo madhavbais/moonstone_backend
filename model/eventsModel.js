@@ -34,11 +34,9 @@ const eventsSchema = new mongoose.Schema(
         start_registration_date:{
             type:Date,
             default: Date.now(),
-            min:Date.now(),
         },
         end_registration_date:{
             type:Date,
-            min:Date.now(),
             default:Date.now()
         },
         event_venue:{
